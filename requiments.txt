@@ -1,0 +1,15 @@
+langchain
+langchain-community
+langchain-groq
+langchain-cohere
+haystack-ai
+langchain-groq
+groq
+faiss-cpu
+gradio
+streamlit
+rank_bm25
+pyprojroot
+python-dotenv
+fastembed
+pdfplumber

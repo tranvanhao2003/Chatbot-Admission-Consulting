@@ -1,0 +1,17 @@
+directories:
+  persist_vector_directory: data/vector_db
+  data_pdf_education_directory: data/data_education.pdf
+  data_csv_education_directory: data/data_education.csv
+
+llm_config:
+  groq_model: llama3-70b-8192
+  temperature: 0.0
+  max_token: 512
+
+retriever_config:
+  similarity_score: 0.6
+  embedding_model: BAAI/bge-small-en-v1.5
+  vector_embed_size: 384
+  chunk_size: 1024
+  chunk_overlap: 300
+  top_k: 3
