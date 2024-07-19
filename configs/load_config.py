@@ -2,8 +2,6 @@ import os
 from dotenv import load_dotenv
 import yaml
 import shutil
-from pyprojroot import here
-
 
 
 load_dotenv()
@@ -15,6 +13,7 @@ class LoadConfig:
         
         self.load_directories(app_config=app_config)
         self.load_llm_config(app_config=app_config)
+        self.load_chunk_config(app_config=app_config)
         self.load_retriver_config(app_config=app_config)
 
     def load_directories(self, app_config):
@@ -28,20 +27,28 @@ class LoadConfig:
         self.data_csv_education_directory = (
             app_config['directories']['data_csv_education_directory']
         )
-    
+        self.persist_chunk_directory = (
+            app_config['directories']['persist_chunk_directory']
+        )
     def load_llm_config(self, app_config):
         # Load parameters llm from load_config.yml file 
-        self.groq_model = app_config['llm_config']['groq_model']
+        self.rag_model = app_config['llm_config']['rag_model']
         self.temperature = app_config['llm_config']['temperature']
         self.max_token = app_config['llm_config']['max_token']
+        self.summarize_model = app_config['llm_config']['summarize_model']
         
     def load_retriver_config(self, app_config):
         self.vector_embed_size = app_config['retriever_config']['vector_embed_size']
         self.similarity_score = app_config['retriever_config']['similarity_score']
         self.embedding_model = app_config['retriever_config']['embedding_model']
         self.top_k = app_config['retriever_config']['top_k']
-        self.chunk_size = app_config['retriever_config']['chunk_size']
-        self.chunk_overlap = app_config['retriever_config']['chunk_overlap']
+
+    def load_chunk_config(self, app_config):
+        self.model_chunk = app_config['chunk_config']['model_name']
+        self.chunk_size = app_config['chunk_config']['chunk_size']
+        self.chunk_overlap = app_config['chunk_config']['chunk_overlap']
+        self.max_attempts = app_config['chunk_config']['max_attempts']
+        self.delimiter = app_config['chunk_config']['delimiter']
 
     def remove_directory(self, directory_path: str): 
         """

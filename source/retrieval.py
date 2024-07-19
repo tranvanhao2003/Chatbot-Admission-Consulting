@@ -2,9 +2,9 @@ from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers import EnsembleRetriever, ContextualCompressionRetriever
 from langchain_cohere import CohereRerank
 from langchain_community.vectorstores import FAISS
-from source.load_data import load_data
+from source.process_data import ProcessData
 from source.load_model import load_embedding_model
-from utils.load_config import LoadConfig
+from configs.load_config import LoadConfig
 import dotenv
 import os
 
@@ -19,16 +19,16 @@ VECTOR_DB_PATH = APP_CONFIG.persist_vector_directory
 
 def create_retrivers():
     # load data parsed
-    docs = load_data()
+    data_chunked = ProcessData().load_data_chunked()
 
     # initialize the bm25 retriever
-    bm25_retriever = BM25Retriever.from_documents(docs)
+    bm25_retriever = BM25Retriever.from_documents(data_chunked)
     bm25_retriever.k = APP_CONFIG.top_k
     
     
     #initialize the chroma retriever
     if not os.path.exists(VECTOR_DB_PATH):
-        faiss_vectorstore = FAISS.from_documents(docs, embedding)
+        faiss_vectorstore = FAISS.from_documents(data_chunked, embedding)
         faiss_vectorstore.save_local(VECTOR_DB_PATH)
     else:
         faiss_vectorstore = FAISS.load_local(VECTOR_DB_PATH, embedding, allow_dangerous_deserialization=True)

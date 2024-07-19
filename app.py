@@ -1,6 +1,6 @@
 import streamlit as st
 from source.chain import ChatBot
-from utils.fewsort_spelling import spelling_correct_sentences
+from utils.fewshot.fewshot_spelling import spelling_correct_sentences
 bot = ChatBot()
 
 
@@ -61,7 +61,7 @@ st.markdown("<hr/>", unsafe_allow_html=True)
 user_query = st.text_input("Enter your question:", placeholder="E.g., What is the aim of AI act?")
 
 if st.button("Answer"):
-    user_query = spelling_correct_sentences(user_query)
+    # user_query = spelling_correct_sentences(user_query)
     bot_answer = respond(user_query)
    
     st.markdown(f"""

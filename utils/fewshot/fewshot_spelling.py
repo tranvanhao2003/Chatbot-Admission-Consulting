@@ -43,7 +43,6 @@ def try_api_keys(api_keys, url):
 groq_api_key = try_api_keys(api_keys, url)
 #-----------------------------------------------------------------------------------------------------------
 os.environ['GROQ_API_KEY'] = groq_api_key
-# llm = ChatOpenAI(model_name=config_app["parameter"]["gpt_model_to_use"], temperature=config_app["parameter"]["temperature"])
 llm = ChatGroq(model="llama3-8b-8192",temperature =0)
 
 def spelling_correct_sentences(text_input):
