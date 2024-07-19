@@ -13,3 +13,4 @@ pyprojroot
 python-dotenv
 fastembed
 pdfplumber
+tiktoken
