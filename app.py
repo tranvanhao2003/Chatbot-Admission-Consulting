@@ -25,7 +25,7 @@ with st.sidebar:
     )
 
     st.header("Các câu hỏi mẫu bạn có thể hỏi")
-    st.markdown("- Ngành công nghệ thông tin học trong bao lâu")
+    st.markdown("- Công nghệ thông tin học trong bao lâu")
     st.markdown("- Tổ hợp xét tuyển ngành kỹ thuật ô tô")
     st.markdown(
         "- Mức học phí ngành kỹ thuật cơ điện tử."
@@ -36,7 +36,7 @@ with st.sidebar:
     )
     st.markdown("- Giới thiệu ngành kỹ thuật Robot và Trí tuệ nhân tạo")
     st.markdown("- Thời gian và học phí ngành khoa học dữ liệu")
-    st.markdown("- Các chính sách dành hco ngành kỹ thuật ô tô")
+    st.markdown("- Các chính sách dành cho ngành kỹ thuật ô tô")
     st.markdown("- Mã ngành của kỹ thuật cơ khí động lực là?")
 
 
