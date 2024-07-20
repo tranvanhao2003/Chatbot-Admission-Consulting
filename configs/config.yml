@@ -1,8 +1,8 @@
 directories:
   persist_vector_directory: data/vector_db
-  data_pdf_education_directory: data/data_education.pdf
-  data_csv_education_directory: data/data_education.csv
-  persist_chunk_directory: data/data_chunked_education.pkl
+  data_pdf_education_directory: data/data_education/data_education.pdf
+  data_csv_education_directory: data/data_education/data_education.xlsx
+  persist_chunk_directory: data/data_education/data_chunked_education.pkl
 
 llm_config:
   rag_model: llama3-70b-8192
