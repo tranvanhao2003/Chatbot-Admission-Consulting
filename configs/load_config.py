@@ -30,6 +30,10 @@ class LoadConfig:
         self.persist_chunk_directory = (
             app_config['directories']['persist_chunk_directory']
         )
+        self.persist_database_directory = (
+            app_config['directories']['persist_database_directory']
+        )
+        
     def load_llm_config(self, app_config):
         # Load parameters llm from load_config.yml file 
         self.rag_model = app_config['llm_config']['rag_model']

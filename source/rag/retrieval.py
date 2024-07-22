@@ -2,8 +2,8 @@ from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers import EnsembleRetriever, ContextualCompressionRetriever
 from langchain_cohere import CohereRerank
 from langchain_community.vectorstores import FAISS
-from source.process_data import ProcessData
-from source.load_model import load_embedding_model
+from source.rag.process_data import ProcessData
+from source.rag.load_model import load_embedding_model
 from configs.load_config import LoadConfig
 import dotenv
 import os
@@ -46,7 +46,6 @@ def create_retrivers():
         base_retriever=ensemble_retriever
     )
     return compression_retriever
-
 
 if __name__ == "__main__":
     compression_retriever = create_retrivers()
