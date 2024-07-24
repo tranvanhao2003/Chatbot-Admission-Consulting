@@ -2,6 +2,8 @@ import os
 from dotenv import load_dotenv
 import yaml
 import shutil
+from langchain_community.embeddings.fastembed import FastEmbedEmbeddings
+from langchain_groq import ChatGroq
 
 
 load_dotenv()
@@ -53,6 +55,23 @@ class LoadConfig:
         self.chunk_overlap = app_config['chunk_config']['chunk_overlap']
         self.max_attempts = app_config['chunk_config']['max_attempts']
         self.delimiter = app_config['chunk_config']['delimiter']
+
+    def load_embedding_model(self) -> FastEmbedEmbeddings:
+        embedding_model = FastEmbedEmbeddings(model_name=self.embedding_model)
+        return embedding_model
+
+    def load_groq_model(self) -> ChatGroq:
+        """
+        Load GROQ model using API
+        """
+        langchain_groq = ChatGroq(
+                model=self.rag_model,
+                api_key=os.getenv("GROQ_API_KEY"),
+                temperature=self.temperature,
+                max_tokens=self.max_token,
+                verbose=True,
+            )
+        return langchain_groq
 
     def remove_directory(self, directory_path: str): 
         """

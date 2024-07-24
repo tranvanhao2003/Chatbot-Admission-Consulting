@@ -11,14 +11,14 @@ llm_config:
   max_token: 850
 
 retriever_config:
-  similarity_score: 0.6
+  similarity_score: 0.5
   embedding_model: BAAI/bge-small-en-v1.5
   vector_embed_size: 384
-  top_k: 3
+  top_k: 5
 
 chunk_config:
   chunk_size: 1024
-  chunk_overlap: 300
+  chunk_overlap: 350
   max_attempts: 3
   delimiter: "####"
   model_name: 'gpt2'
