@@ -1,48 +1,53 @@
 from langchain.agents import create_openai_tools_agent, Tool, AgentExecutor
-from source.rag.chain import ChatBot
+from langchain_core.runnables.history import RunnableWithMessageHistory
 from source.agent.agent_SQL import Agent
+from source.rag.chain_main import RAG
 from langchain import hub
-from source.rag.load_model import load_groq_model
+from utils.prompting.prompt import PROMPT_PDF_AGENT, PROMPTING_CSV_AGENT
+from langchain_community.chat_message_histories import ChatMessageHistory
+from configs.load_config import LoadConfig
 
-
+APP_CFG = LoadConfig()
 education_agent_prompt = hub.pull("hwchase17/openai-functions-agent")
+memory = ChatMessageHistory(session_id="test-session")
 
-tools = [
-    Tool(
-        name="Parameter agent",
-        func=Agent().agent.invoke,
-        description="""Useful when you need to answer a question
-        about questions with numbers such as salary, tuition, year of study, scores... of majors. Not useful for answering other questions, not related to information in the database. Use
-        the entire prompt as input to the tool. For example, if the reminder is
-        "How long does it take to study IT?", the input information must be
-        "How long does it take to study IT?"".
+def create_tools():
+    tools = [
+        Tool(
+            name="Pdf Agent",
+            func=RAG().get_qachain().invoke,
+            description=PROMPT_PDF_AGENT
+        ),
+        Tool(
+            name="Query Agent",
+            func=Agent().agent.invoke,
+            description=PROMPTING_CSV_AGENT
+        ),
+    ]
+    return tools
 
-        Note: You are only allowed to use Vietnamese to answer
-        """,
-    ),
-    Tool(
-        name="",
-        func=ChatBot().chatbot.invoke,
-        description="""Helpful in answering questions about introductions, job opportunities, support policies, and industry scholarships. Not useful when answering objective questions related to numbers such as years of study, salary, tuition... Use
-        the entire prompt as input to the tool. Use the entire prompt as
-        input to the tool. For example, if the reminder is
-        “How long does it take to learn IT?”, the input information must be
-        "How long does it take to learn IT?".
-        
-        Note: You are only allowed to use Vietnamese to answer
-        """,
-    ),
-]
+def init_agent():
+    tools = create_tools()
+    education_agent = create_openai_tools_agent(
+        llm=APP_CFG.load_groq_model(),
+        prompt=education_agent_prompt,
+        tools=tools
+    )
 
-education_agent = create_openai_tools_agent(
-    llm=load_groq_model(),
-    prompt=education_agent_prompt,
-    tools=tools
-)
+    education_agent_excutor = AgentExecutor(
+        agent=education_agent,
+        tools=tools,
+        return_intermediate_steps=False,
+        verbose=True
+    )
 
-education_agent_excutor = AgentExecutor(
-    agent=education_agent,
-    tools=tools,
-    return_intermediate_steps=False,
-    verbose=True
-)
+    # agent_with_chat_history = RunnableWithMessageHistory(
+    #     education_agent_excutor,
+    #     # This is needed because in most real world scenarios, a session id is needed
+    #     # It isn't really used here because we are using a simple in memory ChatMessageHistory
+    #     lambda session_id: memory,
+    #     input_messages_key="input",
+    #     history_messages_key="chat_history",
+    # )
+
+    return education_agent_excutor

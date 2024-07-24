@@ -11,7 +11,6 @@ from langchain_core.prompts import (
     SystemMessagePromptTemplate,
 )
 from langchain_community.agent_toolkits.sql.base import create_sql_agent
-from source.rag.load_model import load_groq_model
 from configs.load_config import LoadConfig
 
 APP_CFG = LoadConfig()
@@ -19,7 +18,7 @@ APP_CFG = LoadConfig()
 class Agent:
     def __init__(self):
         self.db = self.prepare_db()
-        self.llm = load_groq_model()
+        self.llm = APP_CFG.load_groq_model()
         self.full_prompt = self.create_prompt_agent()
         self.agent = self.create_agent()
 
@@ -74,7 +73,7 @@ class Agent:
 
     def create_agent(self):
         agent = create_sql_agent(
-            llm=load_groq_model(),
+            llm=APP_CFG.load_groq_model(),
             db=self.db,
             prompt=self.full_prompt,
             verbose=True,
