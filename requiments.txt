@@ -1,5 +1,5 @@
 langchain
-langchain-community
+langchain-community==0.2.6
 langchain-groq
 langchain-cohere
 haystack-ai
@@ -14,3 +14,4 @@ python-dotenv
 fastembed
 pdfplumber
 tiktoken
+langchain-openai

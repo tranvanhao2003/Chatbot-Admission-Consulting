@@ -64,6 +64,14 @@ def spelling_correct_sentences(text_input):
             "command":"Cơ hội việc làm cho ngành du lịch địa chất."
         },
         {
+            "input_text":"CNTT CLC",
+            "command":"Công nghệ thông tin chất lượng cao"
+        },
+        {
+            "input_text":"CNTT",
+            "command":"Công nghệ thông tin"
+        },
+        {
             "input_text":"to hop xet tuyen nganh ki thaut o to",
             "command":"Tổ hợp xét tuyển ngành kỹ thuật ô tô"
         }]

@@ -5,7 +5,7 @@ directories:
   persist_chunk_directory: data/data_chunked_education.pkl
 
 llm_config:
-  rag_model: llama3-70b-8192
+  rag_model: llama-3.1-70b-versatile
   summarize_model: llama3-8b-8192
   temperature: 0.0
   max_token: 850
